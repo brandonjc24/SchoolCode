@@ -1,0 +1,274 @@
+package testwordlist;
+
+
+public class TestWordList {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        int capacity1 = 2 ;
+        int capacity2 = 8;
+        
+        int correctIndex = 2;
+        int highIndex = 20 ;
+        int negativeIndex = -1 ;
+        
+        char initialChar = 'e' ;
+        char initialChar2= 'd' ;
+        char finalChar = 'm' ;
+        char finalChar2 = 'f' ;
+        
+        String[] string1 = {"apple", "bear", "coffee", "door"} ; // sorted no repeats
+        String[] string2 = {"zebra","year", "xenon", "work"} ; // unsorted no repeats
+        String[] string3 = { "elephant", "job" , "food", "pen", "food" } ; // unsorted w/ repeatds
+        
+        String word1 = "apple" ; // remove/find in string1 insert string2
+        String word2 = "zebra" ; // find/remove in string2 insert string1
+        String word3 = "food" ; // remove/insert string3
+        String word4 = "insert" ; // insert in string3
+        
+        
+        System.out.println("---------------CREATED DEMO---------------\n");
+        
+        System.out.println("----------Testing constructors----------");
+        
+        // Constructor initialized with a capacity, makes an empty WordList object
+        WordList listObj1= new WordList(capacity1);
+        System.out.println("\nTest 1 Constructor 1 with capacity: "+ capacity1+ "\n"+"List:\n"+ listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize()); 
+        
+        // Constructor initialized with a sorted array
+        WordList listObj2= new WordList(string1);
+        System.out.println("\nTest 2 Constructor 2 with sorted list:\n"+"List:\n"+ listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());  
+        
+        // Constructor initialized with a non sorted array
+        WordList listObj3= new WordList(string2);
+        System.out.println("\nTest 3 Constructor 2 with unsorted list:\n"+"List:\n"+ listObj3.toString());
+        System.out.println("capacity="+listObj3.getCapacity());
+        System.out.println("size="+listObj3.getSize());
+        
+        // Constructor initializes with a non sorted array with repeats
+        WordList listObj4= new WordList(string3);
+        System.out.println("\nTest 4 Constructor 2 with unsorted list and repetitions:\n"+"List:\n"+ listObj4.toString());
+        System.out.println("capacity="+listObj4.getCapacity());
+        System.out.println("size="+listObj4.getSize());
+        
+        System.out.println("\n----------Testing insert method----------");
+        
+        // Insert a string at the 0th index
+        System.out.println("\nTest 5 Insert "+word1+" at the beggining of the list:\nList before:\n"+listObj3.toString());
+        System.out.println("capacity="+listObj3.getCapacity());
+        System.out.println("size="+listObj3.getSize());
+        listObj3.insert(word1) ;
+        System.out.println("\nList after:\n"+listObj3.toString());
+        System.out.println("capacity="+listObj3.getCapacity());
+        System.out.println("size="+listObj3.getSize());
+        
+        // Insert a string at the end of the list
+        System.out.println("\nTest 6 Insert "+word2+" at end of the list:\nList before:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        listObj2.insert(word2) ;
+        System.out.println("\nList after:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        // Insert a string in the middle of the list
+        System.out.println("\nTest 7 Insert "+word4+" in the middle of the list: \nList before:\n"+listObj4.toString());
+        System.out.println("capacity="+listObj4.getCapacity());
+        System.out.println("size="+listObj4.getSize());
+        listObj4.insert(word4) ;
+        System.out.println("\nList after:\n"+listObj4.toString());
+        System.out.println("capacity="+listObj4.getCapacity());
+        System.out.println("size="+listObj4.getSize());
+        
+        // Insert a word in an empty list
+        System.out.println("\nTest 8 Insert "+word1+"  into an empty list: \nList before:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        listObj1.insert(word1) ;
+        System.out.println("\nList after:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        
+        // Insert a word that is already in the list
+        listObj2 = new WordList(string1) ;
+        System.out.println("\nTest 9 Insert "+word1+", but it's already in list: \nList before:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        listObj2.insert(word1) ;
+        System.out.println("\nList after:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        // Insert a word into a list where capacity = listsize 
+        listObj2 = new WordList(capacity1) ;
+        listObj2.insert(word1) ;
+        listObj2.insert(word2) ;
+        System.out.println("\nTest 10 Insert new word, "+word3+" into full list: \nList before:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        listObj2.insert(word3) ;
+        System.out.println("\nList after:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        // Insert a word into a list where the capacity = listsize and the word is already in the list
+        listObj2 = new WordList(capacity1) ;
+        listObj2.insert(word1) ;
+        listObj2.insert(word2) ;
+        System.out.println("\nTest 11 Insert "+word1+" into a full list that it is in: \nList before:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        listObj2.insert(word1) ;
+        System.out.println("\nList after:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        System.out.println("\n----------Testing getWordAt method----------");
+        
+         // getWord() method with a correct index
+        listObj2=new WordList(string1);
+        try{
+            System.out.println("\nTest 12 Get word at index: " + correctIndex+" which is a valid index");
+            System.out.println(listObj2.getWordAt(correctIndex));
+        }
+        catch(ArrayIndexOutOfBoundsException e){System.out.println(e);}
+        
+        // getWord() at a negative index
+        listObj2=new WordList(string1);
+        try{
+            System.out.println("\nTest 13 Get word at index "+negativeIndex+" which is negative");
+            System.out.println(listObj2.getWordAt(negativeIndex));
+        }
+        catch(ArrayIndexOutOfBoundsException e){System.out.println(e);}
+        
+        // getWord() at an index > list size
+        listObj2=new WordList(string1);
+        try{
+            System.out.println("\nTest 14 Get word at index "+highIndex+" which is too high");
+            System.out.println(listObj2.getWordAt(highIndex));
+        }
+        catch(ArrayIndexOutOfBoundsException e){System.out.println(e);}
+        
+        System.out.println("\n----------Testing find method----------");
+        
+        // Finding a word in a list that the word is in
+        listObj2= new WordList(string3);
+        System.out.println("\nTest 15 Find " + word3 + " in the list:");
+        System.out.println(listObj2.toString());        
+        int Index = listObj2.find(word3);
+        System.out.println("returned index: "+ Index);
+        
+        // Finding a word that is not in the list
+        System.out.println("\nTest 16 Find " + word2+ " which is not in the list:") ;
+        System.out.println(listObj2.toString()); 
+        Index = listObj2.find(word2);
+        System.out.println("returned index: "+ Index);
+        
+        
+        System.out.println("\n----------Testing remove method----------");
+
+        // Remove a word from the beginning of the list
+        listObj2= new WordList(string1);
+        System.out.println("\nTest 17 Remove "+word1+" from beginning of list: \nList before:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize()); 
+        listObj2.remove(word1);
+        System.out.println("\nList after:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());  
+        
+        // Remove a word from the end of the list
+        listObj3= new WordList(string2);
+        System.out.println("\nTest 18 Remove "+word2+" from the end of list \nList before:\n" + listObj3.toString());
+        System.out.println("capacity="+listObj3.getCapacity());
+        System.out.println("size="+listObj3.getSize());
+        listObj3.remove(word2);
+        System.out.println("\nList after:\n" + listObj3.toString());
+        System.out.println("capacity="+listObj3.getCapacity());
+        System.out.println("size="+listObj3.getSize());
+        
+        // Remove a word from the middle of a list
+        listObj4= new WordList(string3);
+        System.out.println("\nTest 19 Remove "+word3+" from the middle of list\nList before:\n" + listObj4.toString());
+        System.out.println("capacity="+listObj4.getCapacity());
+        System.out.println("size="+listObj4.getSize());
+        listObj4.remove(word3) ;
+        System.out.println("\nList after:\n" + listObj4.toString());
+        System.out.println("capacity="+listObj4.getCapacity());
+        System.out.println("size="+listObj4.getSize());
+        
+        
+        // Remove a word from an empty list
+        listObj1 = new WordList(capacity2) ;
+        System.out.println("\nTest 20 Remove "+word2+" from an empty list: \nList before:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        listObj1.remove(word2) ;
+        System.out.println("\nList after:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        
+        // Remove a word that is not in the list
+        listObj2= new WordList(string1);
+        System.out.println("\nTest 21 Remove "+word2+" which is not in the list: \nList before:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        listObj2.remove(word2);
+        System.out.println("\nList after:\n"+listObj2.toString());
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+      
+        System.out.println("\n----------Testing subList method----------");
+        
+        // Creating a non-empty sublist from a non-empty list, initalChar2 and finalChar are not starting characters of the strings
+        listObj1 = new WordList(string3) ;
+        listObj2 = listObj1.sublist(initialChar2, finalChar) ;
+        System.out.println("\nTest 22 Sublist from "+initialChar2+" to "+finalChar+", non-empty-sublist from non-empty list, word do not start with the characters\nInitial List:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        System.out.println("\nSublist:\n" + listObj2.toString()) ;
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        
+        // Creating an empty sublist from a non-empty list
+        listObj1 = new WordList(string1) ;
+        listObj2 = listObj1.sublist(initialChar, finalChar) ;
+        System.out.println("\nTest 23 Sublist from "+initialChar+" to "+finalChar+", empty sublist from non-empty list\nInitial List:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        System.out.println("\nSublist:\n" + listObj2.toString()) ;
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        
+        // Creating an empty sublist from an empty list
+        listObj1 = new WordList(capacity1) ;
+        listObj2 = listObj1.sublist(initialChar, finalChar) ;
+        System.out.println("\nTest 24 Sublist from "+initialChar+" to "+finalChar+", empty sublist from empty list\nInitial List:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        System.out.println("\nSublist:\n" + listObj2.toString()) ;
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+        
+        
+        // Creating a non-empty list from a non-empty sublist, initial character and final characters are included in the strings
+        listObj1 = new WordList(string3) ;
+        listObj2 = listObj1.sublist(initialChar, finalChar2) ;
+        System.out.println("\ntest 25 Sublist from "+initialChar+" to "+finalChar2+", non-empty sublist from non-empty list, words start with the chracters\nInitial List:\n"+listObj1.toString());
+        System.out.println("capacity="+listObj1.getCapacity());
+        System.out.println("size="+listObj1.getSize());
+        System.out.println("\nSublist:\n" + listObj2.toString()) ;
+        System.out.println("capacity="+listObj2.getCapacity());
+        System.out.println("size="+listObj2.getSize());
+
+    }//end main
+}//end class

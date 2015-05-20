@@ -1,0 +1,247 @@
+package assignment2;
+
+
+public class WordLinkedList {
+    private int ListSize = 0;
+    private Node<String> head  = new Node<>(null, null);
+    
+    public WordLinkedList(){
+        //head = new Node(null, null) ;
+        //ListSize = 0;
+    }
+
+    public WordLinkedList(String[] arrayOfWords){
+        int arraySize = arrayOfWords.length ;
+        //ListSize = 0;
+        //head = new Node<>(null,null) ;
+        
+        Node<String> a = new Node( arrayOfWords[0], null ) ;
+        ListSize++ ;
+        head.next = a ;
+        for(int j = 1; j < arraySize; j++)
+            insert(arrayOfWords[j]) ;
+        
+    }
+    
+    public int getSize(){ return ListSize; }
+    
+    public String getWordAt(int i) throws IndexOutOfBoundsException{
+        if( i < 0 || i > (ListSize-1))
+            throw new ArrayIndexOutOfBoundsException("This index is not valid");
+        else
+        {
+            int j = 0;
+            Node<String> p = head.next;
+            while(j < i )
+            {
+                p = p.next;
+                j++;
+            }
+            return p.element ;
+        }
+    }
+    
+    public void insert( String newword){
+        int inList = find(newword);
+        
+        if(inList == -1)
+        {
+            if (ListSize == 0) // empty list
+            {
+                Node<String> a = new Node<>(newword, null) ;
+                head.next = a ;
+                ListSize++ ;
+            }
+            else // listsize > 1
+            {
+                Node<String> p = head.next; 
+                Node<String> q = p.next ;
+
+                if(newword.compareTo(p.element) < 0) // word gets inserted at the beginning
+                {
+                    Node<String> a = new Node<>( newword, p ) ;
+                    head.next = a ;
+                    ListSize++ ;
+                    return;
+                }
+                
+                while(q != null)
+                {
+                    if(newword.compareTo(p.element) > 0 && newword.compareTo(q.element) < 0)
+                    {
+                        Node<String> a = new Node<>(newword, q) ;
+                        p.next = a ;
+                        ListSize++ ;
+                        return ;
+                    }
+                    p = p.next;
+                    q = q.next ;
+                }
+                
+                Node<String> b = new Node<>(newword, null) ;
+                p.next = b ;
+                ListSize++ ;
+            }
+        }   
+    }
+    
+
+    
+    public int find( String word ){
+        int i = 0;
+        Node<String> p;
+        
+        for(p=head.next; p != null ; p=p.next, i++) 
+        {
+            if (p.element.equals(word))
+                return i ;
+        }
+        return -1;
+    }
+    
+    public String remove(int i) throws IndexOutOfBoundsException{
+        if( i < 0 || i > (ListSize-1))
+            throw new ArrayIndexOutOfBoundsException("This index is not valid");
+        else
+        {
+            String removed;
+            int j = 0;
+            Node<String> p = head.next;
+            if (i == 0)
+            {
+                removed = p.element ;
+                head.next = head.next.next ;
+            }
+            else
+            {
+                while(j < i-1)
+                {
+                    p=p.next;
+                    j++ ;
+                }
+                removed = p.next.element ;
+                
+                /*if (i == ListSize)
+                    p.next = null;
+                else*/
+                
+                p.next = p.next.next ;
+                
+            }
+            ListSize-- ;
+            return removed ;
+        }        
+    }
+    
+    public void mergeTo(WordLinkedList that){
+        
+        if (this.ListSize == 0)
+        {
+            this.head.next = that.head.next ;
+            this.ListSize = that.ListSize ;
+        }
+        else if (that.ListSize != 0 )
+        {    
+            Node<String> p = that.head.next ; // used to loop through that list
+            
+            Node<String> a = this.head.next ; // used to loop through this list          
+            Node<String> b = a.next ;
+            
+            if (p.element.compareTo(a.element) < 0) // if inserted at beginning / used to insert if this list size is 1
+            {                                       // since the lists are sorted alphabetically this check is not needed
+                Node<String> temp = new Node<>(p.element,a ) ; // again after this
+                this.head.next = temp ;
+                b = a;
+                a = temp ;
+                this.ListSize++ ;
+                p=p.next ;
+            }
+            else if( this.ListSize == 1 ) // used to insert at end of this list if this list size is 1
+            {                               // since I used two refrence nodes a and b to loop through this list
+                if (p.element.compareTo( a.element ) == 0 )
+                    p=p.next ;
+                if(p!= null)
+                {
+                    Node<String> temp = new Node<>(p.element, null) ; 
+                    a.next = temp ;                                     
+                    b = temp ;                                         
+                    this.ListSize++ ;                                   
+                    p=p.next ;  
+                }
+            }
+            
+            if(p!= null)
+                if(p.element.compareTo(a.element) == 0) 
+                    p=p.next ;                          
+                                                    
+                                                                                            
+            while(p != null)                        
+            {
+                                
+                if (b.next == null && p.element.compareTo(b.element) > 0) // used if the word needs to be inserted at
+                {                                                           // the end of this list
+                    Node<String> temp = p ;
+                    b.next = temp ;
+                    while (p!=null)
+                    {
+                        p=p.next;
+                        this.ListSize++ ;
+                    }
+                    /*
+                    Node<String> temp = new Node<>( p.element , null );
+                    b.next = temp ;
+                    b=b.next ;
+                    p=p.next ;
+                    this.ListSize++ ;*/
+                }
+                else if (p.element.compareTo(a.element) > 0 && p.element.compareTo(b.element) < 0) 
+                {                                                       // used if the word needs to be inserted
+                    Node<String> temp = new Node<>( p.element , b );    // between two nodes in this list
+                    a.next = temp ;
+                    a=a.next ;
+                    p=p.next ;
+                    this.ListSize++ ;
+                }
+                else // will only be executed if the word does not fit between the two reference
+                {   // nodes a and b
+                    if (p.element.compareTo(b.element) == 0) // if the current element is equal to the reference node b, 
+                        p=p.next ;                          // this list already have the word in the list, so it gets ignored
+                    a=a.next ; 
+                    b=b.next ;
+                }
+            }
+            
+
+        }
+        
+        that.head.next = null ;
+        that.ListSize = 0;
+        
+        /*
+        while(p != null)
+        { 
+            this.insert(p.element);
+            p = p.next;
+            
+        }
+        */ 
+    }
+    
+    
+    public String toString() {
+        String longString = "";
+	if(ListSize==0)
+	    longString = "The list is empty";
+        else{
+            Node p=head.next;
+	    longString = new String("");
+            for (; p.next!= null ; p=p.next) {
+                longString =longString +  p.element + "\n";          
+            }//end for
+            longString =longString +  p.element; 
+        }
+        return longString;
+    }
+    
+    
+}

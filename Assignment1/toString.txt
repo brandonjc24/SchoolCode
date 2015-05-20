@@ -1,0 +1,12 @@
+
+public String toString() {
+        String longString = "";
+	if(listSize==0)
+	    longString = "The list is empty";
+	else
+	    longString = listArray[0];
+        for (int i = 1; i < listSize; i++) {
+            longString =longString + "\n" + listArray[i];
+        }
+        return longString;
+    }
